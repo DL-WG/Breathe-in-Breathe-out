@@ -1,0 +1,17 @@
+Loading anaconda3/personal
+  Loading requirement: fix_unwritable_tmp fix_setxattr
+2021-08-19 21:47:35.293091: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  SSE4.1 SSE4.2 AVX AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-08-19 21:47:36.833222: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2021-08-19 21:47:36.845572: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 2199855000 Hz
+None 
+
+
+EXPERIMENT WITH SEQUENCE LENGTH 13 on file data/inp2.csv of Saliceto_-_Moizo in region PIEMONTE:
+
+!!!START TIME:  19/08/2021 21:47:33
+!!!END TIME:  20/08/2021 00:27:48
+!!!!!!!!!!!!!!!!!!TIME SPENT!!!!!!!!!!!!!!!: 9615.07382941246
+
+!!!!!!!!!!!!!!!!!!TIME SPENT IN HOURS!!!!!!!!!!!!!!!: 2:40:15.073829
+

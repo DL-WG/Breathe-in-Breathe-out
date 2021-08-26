@@ -1,0 +1,298 @@
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 333340822c2e39cde0bc46d96151b0e0
+ |-Score: 0.018891477957367897
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 10
+ |-hidden_LSTM_1_units: 10
+ |-hidden_LSTM_2_units: 10
+ |-input_units: 40
+ |-last_LSTM_units: 15
+ |-learning_rate: 0.0027500000000000003
+ |-n_layers: 3
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 1dd1c57206c01a78da9cb6fbff9be472
+ |-Score: 0.018813522532582283
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 30
+ |-hidden_LSTM_1_units: 20
+ |-hidden_LSTM_2_units: 40
+ |-input_units: 25
+ |-last_LSTM_units: 20
+ |-learning_rate: 0.0012000000000000003
+ |-n_layers: 2
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 0b2b6437ce773238a3b6323a8b3e57ea
+ |-Score: 0.01967102475464344
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 10
+ |-hidden_LSTM_1_units: 45
+ |-hidden_LSTM_2_units: 10
+ |-input_units: 45
+ |-last_LSTM_units: 50
+ |-learning_rate: 0.005900000000000002
+ |-n_layers: 2
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 5af6c8b992eb567ec9e99c1474d8837a
+ |-Score: 0.02007286250591278
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 15
+ |-hidden_LSTM_1_units: 50
+ |-hidden_LSTM_2_units: 55
+ |-input_units: 60
+ |-last_LSTM_units: 15
+ |-learning_rate: 0.0033000000000000004
+ |-n_layers: 2
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 06c8fab9956a5949eb3f5a453206ebae
+ |-Score: 0.019368553534150124
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 30
+ |-hidden_LSTM_1_units: 15
+ |-hidden_LSTM_2_units: 40
+ |-input_units: 55
+ |-last_LSTM_units: 40
+ |-learning_rate: 0.008050000000000002
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 658e29385e509424b876fcb55908d04b
+ |-Score: 0.018472565338015556
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 30
+ |-hidden_LSTM_1_units: 20
+ |-hidden_LSTM_2_units: 25
+ |-input_units: 30
+ |-last_LSTM_units: 30
+ |-learning_rate: 0.0013000000000000002
+ |-n_layers: 3
+[Trial complete]
+[Trial summary]
+ |-Trial ID: fbd5d1508bc19becdb4d498cf48fdd4a
+ |-Score: 0.019340233877301216
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 35
+ |-hidden_LSTM_1_units: 10
+ |-hidden_LSTM_2_units: 50
+ |-input_units: 20
+ |-last_LSTM_units: 15
+ |-learning_rate: 0.0004
+ |-n_layers: 2
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 3f8deb5a7aa44760e4e14a7340c5fa29
+ |-Score: 0.019090063869953156
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 20
+ |-hidden_LSTM_1_units: 40
+ |-hidden_LSTM_2_units: 40
+ |-input_units: 45
+ |-last_LSTM_units: 25
+ |-learning_rate: 0.0027
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: fb81c30d508559484625e681012c1d8d
+ |-Score: 0.021218104287981987
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 10
+ |-hidden_LSTM_1_units: 15
+ |-hidden_LSTM_2_units: 15
+ |-input_units: 40
+ |-last_LSTM_units: 15
+ |-learning_rate: 0.007300000000000002
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: c786f6690a977a00e8064383c0209a31
+ |-Score: 0.018052589148283005
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 25
+ |-hidden_LSTM_1_units: 60
+ |-hidden_LSTM_2_units: 15
+ |-input_units: 55
+ |-last_LSTM_units: 35
+ |-learning_rate: 0.0038500000000000006
+ |-n_layers: 0
+[Trial complete]
+[Trial summary]
+ |-Trial ID: a93209f006d707a3bebc18403537e2bf
+ |-Score: 0.019329439848661423
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 25
+ |-hidden_LSTM_1_units: 35
+ |-hidden_LSTM_2_units: 25
+ |-input_units: 40
+ |-last_LSTM_units: 60
+ |-learning_rate: 0.00215
+ |-n_layers: 3
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 089f943aaed346823338ceece0973555
+ |-Score: 0.018970604985952377
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 25
+ |-hidden_LSTM_1_units: 55
+ |-hidden_LSTM_2_units: 35
+ |-input_units: 50
+ |-last_LSTM_units: 45
+ |-learning_rate: 0.006900000000000002
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: cdb8befbaf67d8a12ffa8eda4bf85faf
+ |-Score: 0.018873026594519615
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 35
+ |-hidden_LSTM_1_units: 50
+ |-hidden_LSTM_2_units: 20
+ |-input_units: 50
+ |-last_LSTM_units: 45
+ |-learning_rate: 0.0023000000000000004
+ |-n_layers: 3
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 73d36420bef3fe41e79896f5bad24e81
+ |-Score: 0.02006092667579651
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 30
+ |-hidden_LSTM_1_units: 30
+ |-hidden_LSTM_2_units: 35
+ |-input_units: 10
+ |-last_LSTM_units: 50
+ |-learning_rate: 0.00035000000000000005
+ |-n_layers: 2
+[Trial complete]
+[Trial summary]
+ |-Trial ID: c682d31f5e0e25f4f0847ade661e406f
+ |-Score: 0.019018981605768204
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 35
+ |-hidden_LSTM_1_units: 60
+ |-hidden_LSTM_2_units: 55
+ |-input_units: 30
+ |-last_LSTM_units: 40
+ |-learning_rate: 0.0038000000000000004
+ |-n_layers: 2
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 977df0b8f2ac58e49163453b360711ef
+ |-Score: 0.018737714737653732
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 30
+ |-hidden_LSTM_1_units: 20
+ |-hidden_LSTM_2_units: 15
+ |-input_units: 55
+ |-last_LSTM_units: 15
+ |-learning_rate: 0.008350000000000002
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 031cc2ef63b97cc0de400945a39e4e04
+ |-Score: 0.018609609454870224
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 35
+ |-hidden_LSTM_1_units: 50
+ |-hidden_LSTM_2_units: 55
+ |-input_units: 15
+ |-last_LSTM_units: 30
+ |-learning_rate: 0.0023000000000000004
+ |-n_layers: 0
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 6657d0c9d1a3e1edfdae1217bf9cee75
+ |-Score: 0.01889759674668312
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 55
+ |-hidden_LSTM_1_units: 50
+ |-hidden_LSTM_2_units: 55
+ |-input_units: 55
+ |-last_LSTM_units: 25
+ |-learning_rate: 0.0018000000000000004
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 59522cb9ad26b284f5f242e2869fe5b5
+ |-Score: 0.018812423571944237
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 55
+ |-hidden_LSTM_1_units: 40
+ |-hidden_LSTM_2_units: 25
+ |-input_units: 35
+ |-last_LSTM_units: 10
+ |-learning_rate: 0.0037000000000000006
+ |-n_layers: 1
+[Trial complete]
+[Trial summary]
+ |-Trial ID: 6039492e5fb7a69aec4dba712f41a809
+ |-Score: 0.020898275077342987
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 50
+ |-hidden_LSTM_1_units: 40
+ |-hidden_LSTM_2_units: 35
+ |-input_units: 25
+ |-last_LSTM_units: 45
+ |-learning_rate: 0.005650000000000001
+ |-n_layers: 3
+[Results summary]
+ |-Results in no2_search1/length22_1629410349/test_with_length_22
+ |-Showing 2 best trials
+ |-Objective(name='val_loss', direction='min')
+[Trial summary]
+ |-Trial ID: c786f6690a977a00e8064383c0209a31
+ |-Score: 0.018052589148283005
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 25
+ |-hidden_LSTM_1_units: 60
+ |-hidden_LSTM_2_units: 15
+ |-input_units: 55
+ |-last_LSTM_units: 35
+ |-learning_rate: 0.0038500000000000006
+ |-n_layers: 0
+[Trial summary]
+ |-Trial ID: 658e29385e509424b876fcb55908d04b
+ |-Score: 0.018472565338015556
+ |-Best step: 0
+ > Hyperparameters:
+ |-hidden_LSTM_0_units: 30
+ |-hidden_LSTM_1_units: 20
+ |-hidden_LSTM_2_units: 25
+ |-input_units: 30
+ |-last_LSTM_units: 30
+ |-learning_rate: 0.0013000000000000002
+ |-n_layers: 3
+
+============================================
+
+        Job resource usage summary 
+
+                 Memory (GB)    NCPUs
+ Requested  :         4            16
+ Used       :         1 (peak)   7.53 (ave)
+
+============================================
