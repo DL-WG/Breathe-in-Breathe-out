@@ -1,0 +1,12 @@
+#PBS -l walltime=24:00:00
+#PBS -l select=1:ncpus=16:mem=4gb
+#PBS -J 1-45
+
+module load anaconda3/personal
+source activate hypersearch
+
+cd $PBS_O_WORKDIR
+python3 hyperparameter_search.py
+
+mkdir $WORK/no2_lstm_hyper/$PBS_JOBID
+cp -r * $WORK/no2_lstm_hyper/$PBS_JOBID
