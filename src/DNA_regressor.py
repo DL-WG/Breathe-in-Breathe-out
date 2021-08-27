@@ -3,32 +3,51 @@ from sklearn.metrics import r2_score
 from Regressor import *
 import tensorflow as tf
 
+"""
+Dynamic Neural Assimilation
+implementation. Inherits from the Regressor class
+"""
+
 
 class DNA_regressor(Regressor):
     def predict(self, plot=False, plot_length=120):
+        """
+        Method responsible for the assimilation of the test data
+        :param plot_length: length of assimilated vs observed vs AMS-MINNI modelled graph
+        :return: model assimilated values
+        """
         self.preds = self.model.predict(self.df.test_gen)
-        if plot:
-            self.obs = pd.Series(
-                self.df.y_scaler.inverse_transform(np.squeeze(self.df.test_data_out['obs'].values[self.df.n_input:])),
-                index=self.df.test_idx)
-            self.sim = pd.Series(
-                self.df.y_scaler.inverse_transform(np.squeeze(self.df.test_data_out['sim'].values[self.df.n_input:])),
-                index=self.df.test_idx)
-            self.preds = pd.Series(self.df.y_scaler.inverse_transform(np.squeeze(self.preds)), index=self.df.test_idx)
 
+        self.obs = pd.Series(
+            self.df.y_scaler.inverse_transform(np.squeeze(self.df.test_data_out['obs'].values[self.df.n_input:])),
+            index=self.df.test_idx)
+        self.sim = pd.Series(
+            self.df.y_scaler.inverse_transform(np.squeeze(self.df.test_data_out['sim'].values[self.df.n_input:])),
+            index=self.df.test_idx)
+        self.preds = pd.Series(self.df.y_scaler.inverse_transform(np.squeeze(self.preds)), index=self.df.test_idx)
+
+        if plot:
             plt.plot(self.preds[:min(plot_length, len(self.preds))], 'b--', label='DNA predicted')
             plt.plot(self.obs[:min(plot_length, len(self.obs))], 'r-', label='Observations')
             plt.plot(self.sim[:min(plot_length, len(self.sim))], 'y-.', label='AMS-MINNI modelled')
             plt.legend()
             plt.show()
+
         return self.preds  # , base_mse, test_mse
 
     def dna_metrics(self):
+        """
+        Method for the calculation of mean squared assimilation and
+        mean squared forecasting error with respect to the observed values
+        :return: MSE^F, MSE^A
+        """
         sim = self.sim.values
         obs = self.obs.values
         preds = self.preds.values
+
         mse_f = np.sqrt(np.square(sim - obs).sum()) / np.sqrt(np.square(obs).sum())
         mse_a = np.sqrt(np.square(preds - obs).sum()) / np.sqrt(np.square(obs).sum())
+
         return mse_f, mse_a
 
 
