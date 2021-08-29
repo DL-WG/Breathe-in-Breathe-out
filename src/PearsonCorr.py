@@ -54,9 +54,3 @@ class PearsonCorr:
         plt.show()
 
         return
-
-
-if __name__ == '__main__':
-    corr = PearsonCorr([24.13440428, 22.49934405, 30.81200657], [14500, 14128, 15607])
-    print(f"Pearson's correlation: {corr.correlation():.3f}")
-    corr.plot_corr()

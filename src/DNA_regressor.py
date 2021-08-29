@@ -1,15 +1,82 @@
 from OptInterpolation import *
 from sklearn.metrics import r2_score
+from LSTM_regressor import *
 from Regressor import *
 import tensorflow as tf
 
 """
-Dynamic Neural Assimilation
-implementation. Inherits from the Regressor class
+Dynamic Neural Assimilation implementation.
+Implements Regressor abstract class.
 """
 
 
 class DNA_regressor(Regressor):
+    def __init__(self, df, n_units=[], lr=0.001, inp_shape=5, reg_param=0.0001, model=None, alfa=0.5):
+        """
+        Object can be initialised with model configuration or with pretrained model
+        :param df: Dataset object with all the train, val and test data
+        :param model: pretrained model
+        :other param:  model configuration if new model needs to be trained
+        """
+        self.df = df
+        self.alfa = alfa
+
+        if model is None:
+            self.model = self.create_model(n_units, lr, inp_shape, reg_param)
+        else:
+            self.model = model
+
+    def dna_loss(self, y_true, y_pred):
+        """
+        Custom DNA loss function.
+        'alfa' controls how much we can trust observations from 0.0 to 1.0.
+        :param y_true: ground truth values
+        :param y_pred: predicted values
+        :return: loss
+        """
+        #     tf.print("y slice")
+        #     tf.print(y_true[0,:][0])
+        #     x = tf.constant([2, 1], dtype=tf.float32)
+        #     yn = tf.multiply(x, y_true)
+        #     tf.print("\nmult: ")
+        #     tf.print(yn)
+        squared_difference = tf.square(y_true - y_pred)
+        #     tf.print("\ndiff: ")
+        #     tf.print(difference)
+        x = tf.constant([self.alfa, 1 - self.alfa], dtype=tf.float32)
+        squared_difference = tf.multiply(x, squared_difference)
+        #     tf.print("\nsq diff mult: ")
+        # #     squared_difference = tf.square(difference)
+        #     tf.print(squared_difference)
+        #     tf.print("\n!!!!!!!!!!!!!!!!!!!!true: ")
+        #     tf.print(y_true)
+        #     tf.print("\n")
+        #     tf.print("\n!!!!!!!!!!!!!!!!!!!!pred: ")
+        #     tf.print(y_pred)
+        #     tf.print("\n")
+        return tf.reduce_mean(squared_difference, axis=-1)
+
+    def create_model(self, n_units, lr, inp_shape, reg_param):
+        """
+        Method responsible for the creation of the model
+        :return: LSTM model
+        """
+        model = Sequential()
+
+        model.add(
+            LSTM(n_units[0], return_sequences=True, input_shape=(None, inp_shape), kernel_regularizer=l2(reg_param)))
+        for i in range(len(n_units[1:-1])):
+            model.add(LSTM(n_units[i], return_sequences=True))
+        model.add(LSTM(n_units[-1], return_sequences=False))
+        model.add(Dense(1))
+
+        model.compile(loss=self.dna_loss, optimizer=Adam(learning_rate=lr))
+        # model.compile(loss='mse', optimizer=Adam(learning_rate=lr))
+
+        model.summary()
+
+        return model
+
     def predict(self, plot=False, plot_length=120):
         """
         Method responsible for the assimilation of the test data
@@ -49,113 +116,3 @@ class DNA_regressor(Regressor):
         mse_a = np.sqrt(np.square(preds - obs).sum()) / np.sqrt(np.square(obs).sum())
 
         return mse_f, mse_a
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    location = 'C:\\Users\\Nikodemas\\Desktop\\IMPERIAL material\\MAGIS\\duomenys\\NO2_data_final.dat'
-    df1 = pd.read_csv(location)
-    df = df1.copy()
-    df_brun = df[df['sta_name'] == 'P.S.GIOVANNI']
-    df_brun.sort_values(by=['date'])
-    # # df_brun.loc[:, 'date'] = pd.to_datetime(df_brun.loc[:, 'date'], format='%Y-%m-%d %H:%M')
-    # # df_brun = df_brun.replace(-999.0000, np.nan)
-    # # df_brun['day_date'] = pd.to_datetime(df_brun['date']).dt.date
-    # # df_brun['obs'] = df_brun['obs'].fillna(df_brun.groupby('day_date')['obs'].transform('median'))
-    # # df_brun['sim'] = df_brun['sim'].fillna(df_brun.groupby('day_date')['sim'].transform('median'))
-    # # while df_brun['obs'].isna().sum():
-    # #     df_brun['obs'] = df_brun['obs'].fillna(df_brun['obs'].shift(24))
-    # # while df_brun['sim'].isna().sum():
-    # #     df_brun['sim'] = df_brun['sim'].fillna(df_brun['sim'].shift(24))
-    # # df_brun = df_brun.set_index('date')
-    # scaler = StandardScaler()  # MinMaxScaler(feature_range=(-1, 1))
-    # dataset = Dataset(df_brun, 8736, 48, 48, ['sim', 'day_sin', 'day_cos'], ['sim'], 12, 24, scaler, scaler, scaled_cols_oth=None)
-    #
-    # model = Sequential()
-    # model.add(LSTM(50, return_sequences=True, input_shape=(None, 3)))
-    # model.add(LSTM(35, return_sequences=False))
-    # model.add(Dense(1))
-    #
-    #
-    # regressor = Regressor(dataset, model)
-    # regressor.fit(2)
-    # preds, base_loss, model_loss = regressor.predict()
-    # print(f"Baseline loss: {base_loss}")
-    # print(f"Model loss: {model_loss}")
-
-    df_brun = clean_na(df_brun, ['sim', 'obs'], 'median', -999.0000)
-    df_brun07 = df_brun[(df_brun.index >= '2007-01-01') & (df_brun.index < '2008-01-01')]
-    print(df_brun07.index.max(), df_brun07.index.min())
-
-    df_brun = add_day_trig(df_brun)
-    df_brun = add_month_trig(df_brun)
-
-    scaler = StandardScaler()  # MinMaxScaler(feature_range=(-1, 1))
-    dataset = Dataset(df_brun, 52608, 8760, 8760,
-                      ['sim', 'day_sin', 'day_cos', 'month_sin', 'month_cos'],
-                      ['sim', 'obs'],
-                      19, 24, scaler, scaler)
-
-    # regressor = Regressor(dataset, 40, 45, 5)
-    regressor = DNA_regressor(dataset, [40, 45], 0.001, 5)
-
-    regressor.fit(1)
-    predictions = regressor.predict()
-    print(predictions)
-
-    # oi_scaler = StandardScaler()
-    # scaled_pred = oi_scaler.fit_transform(predictions.reshape(-1, 1))
-    df_obs = pd.read_csv(
-        'C:\\Users\\Nikodemas\\Desktop\\IMPERIAL material\\MAGIS\\duomenys\\giov_no2.csv')
-    df_obs = df_obs.sort_values(by=['DatetimeBegin'], ascending=True)[['Concentration', 'DatetimeBegin']]
-    df_obs.columns = ['obs', 'date']
-    df_obs = clean_na(df_obs, ['obs'], 'mean')
-    data_ass = OptInterpolation(df_obs[['obs']].values,
-                                predictions.reshape(-1, 1),
-                                df_obs.index)
-
-    updates13 = data_ass.assimilate(R=1, plot=True)
-
-    # scaler = StandardScaler()  # MinMaxScaler(feature_range=(-1, 1))
-    # dataset = Dataset(df_brun, 52608, 8760, 8760,
-    #                   ['sim', 'day_sin', 'day_cos', 'month_sin', 'month_cos'],
-    #                   ['sim'],
-    #                   19, 24, scaler, scaler, scaled_cols_oth=None)
-    #
-    # regressor = Regressor(dataset, [40, 45], 0.001, 5)
-
-    # regressor.fit(5, plot=True)
-    # regressor.predict(show_mse=True)
-    df_brun07 = df_brun[(df_brun.index >= '2007-01-01') & (df_brun.index < '2008-01-01')]
-    data_ass07 = OptInterpolation(df_brun07[['obs']].values, df_brun07[['sim']].values, df_brun07[['obs']].index)
-    updates07 = data_ass07.assimilate(R=1, plot=True)
-    import pickle
-
-    df_brun10 = df_brun[(df_brun.index >= '2010-01-01') & (df_brun.index < '2011-01-01')]
-    data_ass10 = OptInterpolation(df_brun10[['obs']].values, df_brun10[['sim']].values, df_brun10[['obs']].index)
-    updates10 = data_ass10.assimilate(R=1, plot=True)
-
-    d2013 = np.array([x.mean() for x in updates13]).mean()
-    d2010 = np.array([x.mean() for x in updates10]).mean()
-    d2007 = np.array([x.mean() for x in updates07]).mean()
-    x = np.array([d2007, d2010, d2013])
-    y = np.array([1156, 1201, 1676])
-    print(f"x: {x}")
-    print(f"y: {y}")
-    plt.plot(x, y, 'o')
-
-    m, b = np.polyfit(x, y, 1)
-
-    plt.plot(x, m * x + b)
-    plt.xlabel('average pollution')
-    plt.ylabel('number of industries')
-    plt.show()
-
-    filename = 'saved_model.sav'
-
-    regressor.model.save('my_model.h5')
-    # # preds, base_loss, model_loss = regressor.predict()
-    # # print(f"Baseline loss: {base_loss}")
-    # # print(f"Model loss: {model_loss}")
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/

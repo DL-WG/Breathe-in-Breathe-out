@@ -1,9 +1,11 @@
-from Regressor import *
+from LSTM_regressor import *
 from DNA_regressor import *
+from LSTM_regressor import *
 from Dataset import *
 from OptInterpolation import *
 from PearsonCorr import *
 from utils import *
+import sys
 
 plt.rcParams["figure.figsize"] = (20, 15)
 
@@ -18,11 +20,14 @@ correlation between air and industrial data.
 
 class Pipeline:
     def __init__(self, full_inp, obs_inp, corr_inp, LSTM_param, DNA_param, LSTMmodel=None, DNAmodel=None,
-                 input_cols=['sim', 'day_sin', 'day_cos', 'month_sin', 'month_cos'], obs_label='obs', sim_label='sim',
+                 input_cols_lstm=['sim', 'day_sin', 'day_cos', 'month_sin', 'month_cos'],
+                 input_cols_dna=['sim', 'obs', 'day_sin', 'day_cos', 'month_sin', 'month_cos'], obs_label='obs',
+                 sim_label='sim',
                  train_size=52608, val_size=8760, test_size=8760):
         """
-        Object can be initialised with new configuration parameters for the ML models or with already pretrained
-        models
+        Object can be initialised with new configuration parameters
+        for the ML models in a dict form {'seq_length':5, 'neurons':[40, 30], 'lr':0.01}
+        or with already pretrained models
         :param full_inp: historical obs+sim data
         :param obs_inp: latest observed data
         :param corr_inp: industrial data
@@ -31,7 +36,8 @@ class Pipeline:
         :param LSTMmodel: already trained LSTM model
         :param DNAmodel: already trained DNA model
         """
-        self.input_cols = input_cols
+        self.input_cols_lstm = input_cols_lstm
+        self.input_cols_dna = input_cols_dna
         self.sim_label = sim_label
         self.obs_label = obs_label
 
@@ -63,13 +69,25 @@ class Pipeline:
         :param model: pretrained model
         :return: LSTM regressor object
         """
-        scaler = StandardScaler()
         dataset = Dataset(self.df, self.train_size, self.val_size, self.test_size,
-                          self.input_cols,
+                          self.input_cols_lstm,
                           [self.sim_label],
-                          par['seq_length'], 24, scaler, scaler, scaled_cols_oth=None, base_pred=True)
-        # return Regressor(dataset, par['neurons'], par['lr'], par['inp_shape'])
-        return Regressor(dataset, par['neurons'], par['lr'], par['inp_shape'], model)
+                          par['seq_length'], 24, scaled_cols_oth=None, base_pred=True)
+
+        if model is not None:
+            return LSTM_regressor(dataset, model=model)
+        elif self.check_params(par):
+            sys.exit('Wrong LSTM configuration given')
+        else:
+            return LSTM_regressor(dataset, par['neurons'], par['lr'], len(self.input_cols_lstm))
+
+    def check_params(self, par):
+        """
+        Checks if valid configuration for model was given
+        :param par: configuration dict
+        :return: bool
+        """
+        return ('neurons' not in par) or ('lr' not in par) or ('seq_length' not in par)
 
     def create_DNA(self, par, model):
         """
@@ -78,12 +96,17 @@ class Pipeline:
         :param model: pretrained model
         :return: DNA regressor object
         """
-        scaler = StandardScaler()
         dataset = Dataset(self.df, self.train_size, self.val_size, self.test_size,
-                          self.input_cols,
+                          self.input_cols_dna,
                           [self.sim_label, self.obs_label],
-                          par['seq_length'], 24, scaler, scaler)
-        return DNA_regressor(dataset, par['neurons'], par['lr'], par['inp_shape'], model)
+                          par['seq_length'], 24)
+
+        if model is not None:
+            return DNA_regressor(dataset, model=model)
+        elif self.check_params(par):
+            sys.exit('Wrong DNA configuration given')
+        else:
+            return DNA_regressor(dataset, par['neurons'], par['lr'], len(self.input_cols_dna))
 
     def train_pipeline(self, LSTM_epochs, DNA_epochs, LSTM_plot=False, DNA_plot=False):
         """
@@ -95,7 +118,7 @@ class Pipeline:
         """
         if LSTM_epochs > 0:
             print('Training LSTM model\n')
-            self.LSTM.fit(LSTM_epochs, plot=LSTM_plot)
+            self.LSTM.fit(epochs=LSTM_epochs, plot=LSTM_plot)
 
         if DNA_epochs > 0:
             print('Training DNA model\n')
@@ -155,5 +178,3 @@ class Pipeline:
         self.corr.plot_corr(labels, title)
 
         return self.corr.correlation()
-
-# {'seq_length':5, 'neurons':[40, 30], 'lr':0.01, 'inp_shape':5}

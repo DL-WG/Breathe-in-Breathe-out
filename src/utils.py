@@ -42,9 +42,9 @@ def add_day_trig(df):
 
 def add_month_trig(df):
     """
-    Method to add extra time feature representing month
+    Method to add extra time feature representing time in year
     :param df: df to be updated
-    :return: df with trigonometric month time feature added
+    :return: df with trigonometric time feature added
     """
     df["timestamp"] = [x.timestamp() for x in df.index]
 

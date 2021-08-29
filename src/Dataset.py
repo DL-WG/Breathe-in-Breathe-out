@@ -27,13 +27,16 @@ class IdScaler:
     def transform(self, x):
         return x
 
+    def inverse_transform(self, x):
+        return x
+
 
 class Dataset:
-    def __init__(self, df, train_size, val_size, test_size, input_col, label_col, n_input=1, batch_size=24,
-                 x_scaler=IdScaler(), y_scaler=IdScaler(), scaled_col_base=['sim'], scaled_cols_oth=['obs'],
-                 base_pred=False):
+    def __init__(self, df, train_size=52608, val_size=8760, test_size=8760,
+                 input_col=['sim', 'day_sin', 'day_cos', 'month_sin', 'month_cos'], label_col=['sim'], n_input=1,
+                 batch_size=24, x_scaler=StandardScaler(), y_scaler=StandardScaler(), scaled_col_base=['sim'],
+                 scaled_cols_oth=['obs'], base_pred=False):
         """
-
         :param df: panda df to be processed
         :param train_size: training set size
         :param val_size: validation set size
@@ -77,6 +80,9 @@ class Dataset:
 
         if scaled_cols_oth is not None:
             for col in scaled_cols_oth:
+                self.train_data_in[[col]] = self.x_scale(self.train_data_in[[col]], False)
+                self.val_data_in[[col]] = self.x_scale(self.val_data_in[[col]], False)
+                self.test_data_in[[col]] = self.x_scale(self.test_data_in[[col]], False)
                 self.train_data_out[[col]] = self.y_scale(self.train_data_out[[col]], False)
                 self.val_data_out[[col]] = self.y_scale(self.val_data_out[[col]], False)
                 self.test_data_out[[col]] = self.y_scale(self.test_data_out[[col]], False)
