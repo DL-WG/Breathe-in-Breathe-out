@@ -22,8 +22,7 @@ class Pipeline:
     def __init__(self, full_inp, obs_inp, corr_inp, LSTM_param, DNA_param, LSTMmodel=None, DNAmodel=None,
                  input_cols_lstm=['sim', 'day_sin', 'day_cos', 'month_sin', 'month_cos'],
                  input_cols_dna=['sim', 'obs', 'day_sin', 'day_cos', 'month_sin', 'month_cos'], obs_label='obs',
-                 sim_label='sim',
-                 train_size=52608, val_size=8760, test_size=8760):
+                 sim_label='sim', train_size=52608, val_size=8760, test_size=8760, year1=2007, year2=2010):
         """
         Object can be initialised with new configuration parameters
         for the ML models in a dict form {'seq_length':5, 'neurons':[40, 30], 'lr':0.01}
@@ -47,14 +46,14 @@ class Pipeline:
 
         df = pd.read_csv(full_inp)
         df = clean_na(df, [sim_label, obs_label], 'mean', -999.0000)
-        self.df07 = df[(df.index >= '2007-01-01') & (df.index < '2008-01-01')]
-        self.df10 = df[(df.index >= '2010-01-01') & (df.index < '2011-01-01')]
+        self.df07 = df[(df.index >= str(year1) + '-01-01') & (df.index < str(year1 + 1) + '-01-01')]
+        self.df10 = df[(df.index >= str(year2) + '-01-01') & (df.index < str(year2 + 1) + '-01-01')]
         df = add_day_trig(df)
         self.df = add_month_trig(df)
 
         df_obs = pd.read_csv(obs_inp)
-        df_obs = df_obs.sort_values(by=['DatetimeBegin'], ascending=True)[['Concentration', 'DatetimeBegin']]
-        df_obs.columns = [obs_label, 'date']
+        df_obs = df_obs.sort_values(by=['date'], ascending=True)[[obs_label, 'date']]
+        # df_obs.columns = [obs_label, 'date']
         self.df_obs = clean_na(df_obs, [obs_label], 'mean')
 
         self.y_corr = pd.read_csv(corr_inp).columns.astype(int)
@@ -77,7 +76,7 @@ class Pipeline:
         if model is not None:
             return LSTM_regressor(dataset, model=model)
         elif self.check_params(par):
-            sys.exit('Wrong LSTM configuration given')
+            sys.exit('Invalid LSTM configuration given')
         else:
             return LSTM_regressor(dataset, par['neurons'], par['lr'], len(self.input_cols_lstm))
 
@@ -104,7 +103,7 @@ class Pipeline:
         if model is not None:
             return DNA_regressor(dataset, model=model)
         elif self.check_params(par):
-            sys.exit('Wrong DNA configuration given')
+            sys.exit('Invalid DNA configuration given')
         else:
             return DNA_regressor(dataset, par['neurons'], par['lr'], len(self.input_cols_dna))
 

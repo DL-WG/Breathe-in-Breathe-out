@@ -34,26 +34,10 @@ class DNA_regressor(Regressor):
         :param y_pred: predicted values
         :return: loss
         """
-        #     tf.print("y slice")
-        #     tf.print(y_true[0,:][0])
-        #     x = tf.constant([2, 1], dtype=tf.float32)
-        #     yn = tf.multiply(x, y_true)
-        #     tf.print("\nmult: ")
-        #     tf.print(yn)
         squared_difference = tf.square(y_true - y_pred)
-        #     tf.print("\ndiff: ")
-        #     tf.print(difference)
         x = tf.constant([self.alfa, 1 - self.alfa], dtype=tf.float32)
         squared_difference = tf.multiply(x, squared_difference)
-        #     tf.print("\nsq diff mult: ")
-        # #     squared_difference = tf.square(difference)
-        #     tf.print(squared_difference)
-        #     tf.print("\n!!!!!!!!!!!!!!!!!!!!true: ")
-        #     tf.print(y_true)
-        #     tf.print("\n")
-        #     tf.print("\n!!!!!!!!!!!!!!!!!!!!pred: ")
-        #     tf.print(y_pred)
-        #     tf.print("\n")
+
         return tf.reduce_mean(squared_difference, axis=-1)
 
     def create_model(self, n_units, lr, inp_shape, reg_param):
@@ -94,9 +78,9 @@ class DNA_regressor(Regressor):
         self.preds = pd.Series(self.df.y_scaler.inverse_transform(np.squeeze(self.preds)), index=self.df.test_idx)
 
         if plot:
-            plt.plot(self.preds[:min(plot_length, len(self.preds))], 'b--', label='DNA predicted')
-            plt.plot(self.obs[:min(plot_length, len(self.obs))], 'r-', label='Observations')
-            plt.plot(self.sim[:min(plot_length, len(self.sim))], 'y-.', label='AMS-MINNI modelled')
+            plt.plot(self.preds[360:360+min(plot_length, len(self.preds))], 'b--', label='DNA predicted')
+            plt.plot(self.obs[360:360+min(plot_length, len(self.obs))], 'r-', label='Observations')
+            plt.plot(self.sim[360:360+min(plot_length, len(self.sim))], 'y-.', label='AMS-MINNI modelled')
             plt.legend()
             plt.show()
 

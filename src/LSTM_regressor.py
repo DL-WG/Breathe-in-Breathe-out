@@ -63,8 +63,8 @@ class LSTM_regressor(Regressor):
             index=self.df.test_idx)
         self.preds = pd.Series(self.df.y_scaler.inverse_transform(np.squeeze(preds)), index=self.df.test_idx)
 
-        plt.plot(self.preds[:min(plot_length, len(self.preds))], 'b--', label=labels[0])
-        plt.plot(self.sim[:min(plot_length, len(self.sim))], 'y-.', label=labels[1])
+        plt.plot(self.preds[360:360+min(plot_length, len(self.preds))], 'b--', label=labels[0])
+        plt.plot(self.sim[360:360+min(plot_length, len(self.sim))], 'y-.', label=labels[1])
         plt.legend()
         plt.rcParams["figure.figsize"] = (20, 15)
         plt.show()
