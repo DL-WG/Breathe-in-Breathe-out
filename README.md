@@ -6,8 +6,8 @@
  `Pipeline` object requires three files as an input - historical observed and modelled values for the LSTM and DNA training, latest observed values for the final data assimilation and industrial data file for the correlation measures. Currently default parameters are chosen to match our dataset. The full pipeline execution then looks something like this:
  ```Python
  # LSTM and DNA model configurations
- lstm_config = {'seq_length': 13, 'neurons': [40, 40], 'lr': 0.01, 'inp_shape': 5}
- dna_config = {'seq_length': 16, 'neurons': [45, 20], 'lr': 0.01, 'inp_shape': 6}
+ lstm_config = {'seq_length': 13, 'neurons': [40, 40], 'lr': 0.01}
+ dna_config = {'seq_length': 16, 'neurons': [45, 20], 'lr': 0.01}
  
  #initialisation, can also be done with pretrained models instead by passing the models as parameters
  pipeline = Pipeline('hist_data.csv', 'obs_data.csv', 'industries.csv', lstm_config, dna_config)
