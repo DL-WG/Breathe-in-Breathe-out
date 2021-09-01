@@ -91,8 +91,10 @@ class LSTM_regressor(Regressor):
     def plot_predicted_truth_corr(self, labels=['Modelled concentrations', 'LSTM predicted concentrations'], title=None,
                                   color='royalblue'):
         fig, ax = plt.subplots()
+        mini = min(self.sim.min(), self.preds.min())
+        maxi = max(self.sim.max(), self.preds.max())
         ax.scatter(self.sim, self.preds, s=600, marker='P', color=color, alpha=0.5)
-        ax.plot([self.sim.min(), self.sim.max()], [self.sim.min(), self.sim.max()], '--', color='gold', lw=10)
+        ax.plot([mini, maxi], [mini, maxi], '--', color='gold', lw=10)
         ax.set_xlabel(labels[0], fontdict={'size': 36})
         ax.set_ylabel(labels[1], fontdict={'size': 36})
         ax.tick_params(axis='both', which='major', labelsize=32)

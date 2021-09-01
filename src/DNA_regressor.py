@@ -35,7 +35,7 @@ class DNA_regressor(Regressor):
         :return: loss
         """
         squared_difference = tf.square(y_true - y_pred)
-        x = tf.constant([self.alfa, 1 - self.alfa], dtype=tf.float32)
+        x = tf.constant([1 - self.alfa, self.alfa], dtype=tf.float32)
         squared_difference = tf.multiply(x, squared_difference)
 
         return tf.reduce_mean(squared_difference, axis=-1)
