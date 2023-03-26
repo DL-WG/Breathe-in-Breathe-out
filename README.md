@@ -1,12 +1,11 @@
 # Breathe in Breathe out
- Repository created for the "Breathe in Breathe out: Deep Learning and Data Assimilation for a Big Data problem" MSc Individual Project
+ Repository created for the "Dynamic Neural Assimilation: a Deep Learning and Data Assimilation model for Air Quality predictions." paper. Air quality data used in our calculations can be found [here](http://airqualitymodels.enea.it/).
  
  ![Alt text](/misc/classes.png?raw=true "Class scheme and relationships")
 
  * `src` folder contains all of the source code implementation of the classes seen in the picture.
  * `hyperparameter search` folder contains parallelised hyperparameter optimization `Python` program, `bash` script used for optimization execution and optimization results.
  * `industrial data` folder contains number of industries in Italy we used from the year 2007, 2010, 2013
- ##### Sadly data used in the project is confidential, so no actual results can be shown here
  ### Tutorial
  
  `Pipeline` class is the final workflow developed in the project, however other classes like `DNA_regressor`, `LSTM_regressor`, `Dataset` and etc can still be used separately without being involved in the `Pipeline` class.
